@@ -53,6 +53,17 @@ class AcquisitionController extends AbstractController
 
         // get history
         $history = array_reverse(yaml_parse_file(CUTTER_basePath.'Temp/History/History.yaml'));
+
+        // remove double entries
+        $historyCheck = [];
+        foreach ($history as $index => $item) {
+            if (isset($historyCheck[$item['url']])) {
+                unset($history[$index]);
+            } else {
+                $historyCheck[$item['url']] = true;
+            }
+        }
+
         $this->view->assign('history', $history);
     }
 
