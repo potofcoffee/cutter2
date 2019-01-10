@@ -1,0 +1,11 @@
+body {
+    background-color: black;
+}
+
+ul.dropdown-form {
+    width: 500px !important;
+}
+
+#results {
+    margin-bottom: 0;
+}

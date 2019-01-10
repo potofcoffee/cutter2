@@ -1,0 +1,25 @@
+<div class="panel panel-default" data-category-idx="{{idx}}" id="category{{idx}}">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapse_{{idx}}"><span class="badge badge-info">{{sets|length}}</span> {{category}}</a>
+            <div class="pull-right">
+                <button class="btn btn-xs btn-danger btn-delete-panel" title="Löschen"><span class="fa fa-trash"></span></button>
+            </div>
+        </h3>
+    </div>
+    <div id="collapse_{{idx}}" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="panel-group" id="accordion{{idx}}">
+
+                {% for setIndex, set in sets %}
+                <div class="ajax-get-set" data-category="{{category}}" data-set="{{setIndex}}" data-category-idx="{{idx}}" data-idx="{{loop.index0}}"><div class="panel panel-heading"><span class="fa fa-spinner fa-spin"></span> Lade Einstellungen für Vorlage "{{set.title}}" ...</div></div>
+                {% endfor %}
+                <hr />
+                <button class="btn btn-default btn-add-set" title="Neue Vorlage hinzufügen..."><span class="fa fa-plus"></span> Neue Vorlage hinzufügen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

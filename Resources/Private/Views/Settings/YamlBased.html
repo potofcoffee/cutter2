@@ -1,0 +1,106 @@
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <title>CUTTER</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/jquery.smartmenus.bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/settings.js"></script>
+</head>
+<body>
+<form method="post" action="{{baseUrl}}settings/{{settingsSection}}">
+
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{baseUrl}}settings">CUTTER | Einstellungen</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{baseUrl}}settings/templates" title="Vorlagen">Vorlagen</a></li>
+                    <li {{settingsSection == 'providers' ? 'class="active"' : ''}}><a href="{{baseUrl}}settings/providers" title="Quellen">Quellen</a></li>
+                    <li {{settingsSection == 'connectors' ? 'class="active"' : ''}}><a href="{{baseUrl}}settings/connectors" title="Datenbanken">Datenbanken</a></li>
+                </ul>
+                <div class="navbar-form navbar-right">
+                    <a class="btn btn-info" href="{{baseUrl}}ui/index" title="Zurück">
+                        <span class="fa fa-return"></span> Zurück
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div id="accordion" class="panel-group">
+            {% for provider,providerConfig in config %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapse{{loop.index}}">{{provider}}</a>
+                    </h4>
+                </div>
+                <div id="collapse{{loop.index}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {% for fieldsetName, fieldset in providerConfig %}
+                        <fieldset data-fieldset="{{fieldsetName}}" data-provider="{{provider}}">
+                            <legend>{{fieldsetName == '__generic' ? 'Allgemeine Einstellungen' : fieldsetName}}
+                                <span class="pull-right">
+                                    <button class="btn btn-default btn-sm btn-add-field"
+                                            title="Schlüssel hinzufügen"><span class="fa fa-plus"></span></button>
+                                    {% if fieldsetName != '__generic' %}
+                                    <button class="btn btn-danger btn-sm btn-remove-fieldset" title="Abschnitt löschen"><span
+                                            class="fa fa-trash"></span></button>
+                                    {% endif %}
+                                </span>
+                            </legend>
+                            {%for field, value in fieldset %}
+                            <div class="form-group">
+                                <label for="config[{{provider}}][{{fieldsetName}}][{{field}}]">{{field}}</label>
+                                <div class="input-group">
+                                    <input type="{{ field == 'password' ? 'password' : 'text' }}" class="form-control"
+                                           name="config[{{provider}}][{{fieldsetName}}][{{field}}]" value="{{value}}"/>
+                                    <span class="input-group-btn"><button class="btn btn-default btn-remove-field" type="button"><span class="fa fa-trash"  style="line-height: inherit !important;" title="Schlüssel löschen"></span></button></span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </fieldset>
+                        {% endfor %}
+                        <hr/>
+                        <button class="btn btn-default btn-sm btn-add-fieldset" title="Abschnitt hinzufügen"><span
+                                class="fa fa-plus"></span> Abschnitt hinzufügen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button id="btnSave" type="submit" class="btn btn-success" title="Speichern">
+            <span class="fa fa-save"></span> Speichern
+        </button>
+    </div>
+</form>
+<script>var baseUrl = '{{baseUrl}}';</script>
+</body>
+
+</html>

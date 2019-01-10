@@ -1,0 +1,287 @@
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <title>CUTTER</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/jquery.smartmenus.bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/jquery.Jcrop.css" type="text/css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.0/css/bootstrap-colorpicker.min.css"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.0/js/bootstrap-colorpicker.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.Jcrop.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.dropper.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/holder/holder.js"></script>
+    <script src="{{ baseUrl }}js/ui.js"></script>
+
+</head>
+<body>
+<form action="cut.php" method="post" onsubmit="return checkCoords();">
+
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">CUTTER</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{baseUrl}}acquisition/form" title="Zurück zum Upload"><span
+                                class="fa fa-upload"></span> Zurück zum Upload</a>
+                    </li>
+                    <li>
+                        <a id="btnSettings" title="Einstellungen" href="{{baseUrl}}settings/templates">
+                            <span class="fa fa-cog"></span>
+                        </a>
+                    </li>
+                    <li style="margin-right: 20px;">
+                        <a href="#">
+                            <span id="stepIcon"><span></span></span> <span id="stepTitle"><span
+                                class="fa fa-spinner fa-spin"></span></span></span> <span id="measurements"
+                                                                                          class="badge"></span><span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {% for templateGroupTitle,templateGroup in templates %}
+                            <li>
+                                <a href="#"> {{ templateGroupTitle }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    {% for template in templateGroup %}
+                                    <li>
+                                        <a href="#" class="templateSelector"
+                                           data-template="{{ template.key }}" data-category="{{ template.category }}"
+                                           data-set="{{ template.set }}">
+                                            <span class="glyphicon glyphicon-{{ template.icon }}"></span>&nbsp;
+                                            {{ template.title }}
+                                            <span class="badge pull-right">
+                                                {{template.w}} x {{template.h}}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li id="templateDataButton" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Daten</b> <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-form">
+                            <li>
+                                <div class="col-lg-12">
+                                    <div id="templateData">
+                                        <div id="arguments"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Quellenangaben</b> <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-form">
+                            <li>
+
+                                <div class="col-lg-12">
+                                    <div id="legalData">
+                                        <div class="form-group">
+                                            <label for="legal">Quellenangaben zum Bild:</label>
+                                            <input type="text" id="legal" name="legal" value="{{ legal }}"
+                                                   class="form-control"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[license][full]">
+                                                Lizenz (komplette Angaben)
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[license][full]"
+                                                   value="{{meta.license.full}}"
+                                                   placeholder="z.B. CC0 Public Domain, https://creativecommons.org/publicdomain/zero/1.0/deed.de"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[license][short]">
+                                                Lizenz (kurz)
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[license][short]"
+                                                   value="{{meta.license.short}}" placeholder="z.B. CC0"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[license][url]">
+                                                Lizenz (Link)
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[license][url]"
+                                                   value="{{meta.license.url}}"
+                                                   placeholder="z.B. https://creativecommons.org/publicdomain/zero/1.0/deed.de"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[url]">
+                                                URL zum Bild
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[url]"
+                                                   value="{{meta.url}}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[author]">
+                                                Urheber
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[author]"
+                                                   value="{{meta.author}}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="meta[id]">
+                                                ID
+                                            </label>
+                                            <input class="form-control" type="text" name="meta[id]"
+                                                   value="{{meta.id}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Text</b> <span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-form">
+                            <li>
+
+                                <div class="col-lg-12">
+                                    <div id="overlayData">
+                                        <div class="form-group">
+                                            <label for="overlayText">Text im Bild:</label>
+                                            <input type="text" id="overlayText" name="overlayText"
+                                                   value="{{ overlayText }}"
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="overlayFontFile">Schriftart:</label>
+                                        <select id="overlayFontFile" name="overlayFontFile" class="form-control">
+                                            {% for font in fonts %}
+                                            <option value="{{ font.file }}">{{ font.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="overlayFontSize">Schriftgrösse:</label>
+                                        <input type="text" id="overlayFontSize" name="overlayFontSize"
+                                               value="{{ overlayFontSize }}"
+                                               class="form-control"/>
+                                        <div class="form-group">
+                                            <label>Ausrichtung:</label>
+                                            <div>
+                                                <input type="hidden" value="{{ overlayAlignment }}"
+                                                       id="overlayAlignment"/>
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-default btnOverlayAlignment active"
+                                                           id="overlayAlignmentOption0">
+                                                        <input type="radio" name="overlayAlignment">
+                                                        <span class="fa fa-align-left" title="linksbündig"
+                                                              value="0"></span>
+                                                    </label>
+                                                    <label class="btn btn-default btnOverlayAlignment"
+                                                           id="overlayAlignmentOption1">
+                                                        <input type="radio" name="overlayAlignment" value="1">
+                                                        <span class="fa fa-align-center" title="zentriert"></span>
+                                                    </label>
+                                                    <label class="btn btn-default btnOverlayAlignment"
+                                                           id="overlayAlignmentOption2">
+                                                        <input type="radio" name="overlayAlignment" value="2">
+                                                        <span class="fa fa-align-right" title="rechtsbündig"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group overlaycolorpick" width="200">
+                                            <span class="input-group-btn">
+                                                <button id="btnEyeDropperOverlay" class="btn btn-default btnEyeDropper" type="button">
+                                                    <span class="fa fa-eye-dropper"></span>&nbsp;
+                                                </button>
+                                            </span>
+                                            <input type="text" id="overlayColor" name="overlayColor" value="#ffffff"
+                                                   class="form-control"/>
+                                            <span class="input-group-addon" id="overlayColorPickerButton"><i></i></span>
+                                        </div>
+                                    </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <div class="input-group colorpick" width="200">
+                            <span class="input-group-btn">
+                                <button id="btnEyeDropper" class="btn btn-default" type="button">
+                                    <span class="fa fa-eye-dropper"></span>&nbsp;
+                                </button>
+                            </span>
+                            <input type="text" id="textcolor" name="textcolor" value="#ffffff"
+                                   class="form-control"/>
+                            <span class="input-group-addon" id="pickerButton"><i></i></span>
+                        </div>
+                    </div>
+                    <button id="btnCut" type="button" class="btn btn-success" title="Bild zuschneiden"><span
+                            class="fa fa-scissors"></span> Zuschneiden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="tab-content">
+
+        <div id="imageData">
+            <div class="container">
+                <div id="imageArea">
+
+
+                    <!-- This is the image we're attaching Jcrop to -->
+                    <div id="cropdiv">
+                        <img src="{{ image }}" id="cropbox" width="{{ width }}" height="{{ height }}"/>
+                    </div>
+                    <div id="data-container"></div>
+                    <br/>
+
+
+                    <input type="hidden" id="x" name="x"/>
+                    <input type="hidden" id="y" name="y"/>
+                    <input type="hidden" id="w" name="w"/>
+                    <input type="hidden" id="h" name="h"/>
+                    <iframe id="resultsFrame" style="width: 1px; height: 1px; border: none;"></iframe>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</form>
+<script type="text/javascript">
+    loadTemplate('{{ firstTemplate.category }}', '{{ firstTemplate.set }}');
+</script>
+</body>
+
+</html>

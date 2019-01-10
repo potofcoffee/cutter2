@@ -1,0 +1,80 @@
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <title>CUTTER</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/jquery.smartmenus.bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.smartmenus.bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/settings.js"></script>
+</head>
+<body>
+<form method="post" action="{{baseUrl}}settings/templates">
+
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{baseUrl}}settings">CUTTER | Einstellungen</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="{{baseUrl}}settings/templates" title="Vorlagen">Vorlagen</a>
+                    </li>
+                    <li><a href="{{baseUrl}}settings/providers" title="Quellen">Quellen</a></li>
+                </ul>
+                <div class="navbar-form navbar-right">
+                    <a class="btn btn-info" href="{{baseUrl}}ui/index" title="Zurück">
+                        <span class="fa fa-return"></span> Zurück
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="panel-group" id="accordion">
+
+
+            {% for category, sets in config %}
+            <div class="ajax-get-category" data-category="{{category}}" data-idx="{{loop.index}}">
+                <div class="panel panel-heading"><span class="fa fa-spinner fa-spin"></span> Lade Einstellungen für
+                    Gruppe "{{category}}" ...
+                </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+        <hr/>
+        <button class="btn btn-default btn-add-category" title="Neue Gruppe hinzufügen..."><span
+                class="fa fa-plus"></span> Neue Gruppe hinzufügen
+        </button>
+        <button id="btnSave" type="submit" class="btn btn-success" title="Speichern">
+            <span class="fa fa-save"></span> Speichern
+        </button>
+    </div>
+</form>
+<script>var baseUrl = '{{baseUrl}}';</script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+---
+Christophs Website:
+- title: "Sliderbild f\xFCr Portalseite"
+  width: "1170"
+  height: "477"
+  suffix: portal
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+- title: Blogpost
+  width: "1024"
+  height: "768"
+  suffix: _wp
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Wordpress
+  processorOptions: 'blog: 2'
+Kindle:
+- title: Coverbild
+  width: "1600"
+  height: "2560"
+  suffix: KindleCover
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+Predigten:
+- title: "Bildschirmf\xFCllend"
+  width: "1024"
+  height: "768"
+  suffix: fullscreen
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+Social Media:
+- title: Facebook Event
+  width: "714"
+  height: "264"
+  suffix: fbevent
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+- title: Instagram
+  width: "1080"
+  height: "1080"
+  suffix: insta
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: "100"
+  overlayAlignment: "2"
+  processor: Download
+  processorOptions: ""
+- title: Podcast logo
+  width: "1400"
+  height: "1400"
+  suffix: podcast_logo
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+- title: Facebook Page
+  width: "820"
+  height: "312"
+  suffix: fbpage
+  overlayFontName: /home/peregrinus/dev/cutter/Assets/Fonts/OpenSans.ttf
+  overlayFontSize: ""
+  overlayAlignment: "0"
+  processor: Download
+  processorOptions: ""
+...

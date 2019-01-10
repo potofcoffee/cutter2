@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--
+CUTTER
+Versatile Image Cutter and Processor
+http://github.com/VolksmissionFreudenstadt/cutter
+
+Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+Author: Christoph Fischer, chris@toph.de
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html lang="de">
+<head>
+    <title>CUTTER: Bilddatei auswählen ...</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/uploadfile.min.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ baseUrl }}Resources/Public/css/cutter.css" type="text/css"/>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{ baseUrl }}js/cutter.js"></script>
+    <script src="{{ baseUrl }}Resources/Public/js/jquery.uploadfile.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">CUTTER</div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Bilddatei auswählen...</h1>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="cloud" class="well">
+                <h2>Aus der Cloud</h2>
+                <form id="crossloadForm" method="get" role="form" action="{{ baseUrl }}acquisition/import">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="url" name="url"
+                                   placeholder="http://www.example.com/image1.html"/>
+                            <span class="input-group-btn">
+                                    <button id="crossloadSubmit" class="btn btn-default" type="button">Laden</button>
+                                </span>
+                        </div>
+                    </div>
+                    <input id="crossloadStep" name="step" type="hidden" value="0"/>
+                    <input id="crossloadLegal" name="step" type="hidden" value=""/>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div id="local" class="well">
+                <h2>Von meinem Computer</h2>
+                <form id="legal" role="form">
+                </form>
+                <form id="fileupload" action="{{ baseUrl }}acquisition/uploaded" method="POST"
+                      enctype="multipart/form-data"
+                      role="form">
+                    <p>
+                        Bitte lade hier das Bild hoch, das du im nächsten Schritt bearbeiten möchtest ...
+                    </p>
+
+                    <input id="origUpload" type="file" name="upload" accept="image/jpeg"/>
+                    <input id="origUploadButton" type="submit" name="submit" value="Upload starten"/>
+                    <input type="hidden" name="MAX_FILE_SIZE" value="5000000000">
+                    <input id="legal" type="hidden" name="legal" value="">
+
+                </form>
+                <div id="fileuploader">Bild hochladen</div>
+            </div>
+
+        </div>
+    </div>
+    <hr/>
+    <h3>Zuletzt verwendete Bilder</h3>
+    <div class="row display-flex">
+        {% for item in history %}
+        <div class="col-md-2">
+            <a href="{{baseUrl}}acquisition/import?step=0&url={{item.url}}" class="thumbnail">
+                <div class="image">
+                    <img src="{{baseUrl}}Temp/History/{{item.preview}}" class="img img-responsive full-width">
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script src="{{ baseUrl }}js/uploadUi.js"></script>
+
+</body>
+
+</html>

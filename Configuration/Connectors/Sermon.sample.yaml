@@ -1,0 +1,6 @@
+host: localhost
+user: vmfredbb
+pass: fdsvmec
+name: usrdb_vmfredbb_kool
+event_table: ko_event
+group_table: ko_eventgruppen

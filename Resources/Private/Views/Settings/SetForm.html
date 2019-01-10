@@ -1,0 +1,102 @@
+<div id="set{{catIdx}}_{{setIdx}}" class="panel panel-default" data-category="{{category}}" data-category-idx="{{catIdx}}" data-set-idx="{{setIdx}}">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion{{catIdx}}"
+               href="#collapse{{catIdx}}_{{setIdx}}">
+                <span class="glyphicon glypicon-{{processors[set.processor]}}"></span>
+                <span class="info-set-title">{{set.title}}</span> <span class="badge"><span class="info-set-width">{{set.width}}</span>x<span class="info-set-height">{{set.height}}</span></span>
+            </a>
+            <div class="pull-right">
+                <button class="btn btn-xs btn-danger btn-delete-panel" title="Löschen"><span class="fa fa-trash"></span></button>
+            </div>
+        </h4>
+    </div>
+    <div id="collapse{{catIdx}}_{{setIdx}}"
+         class="panel-collapse collapse">
+        <div class="panel-body">
+            <!-- 'category', 'height', 'width', 'processor', 'suffix', 'title', 'processorOptions', 'set'-->
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][title]">Titel</label>
+                <input class="form-control set-title" type="text"
+                       name="config[{{category}}][{{setIdx}}][title]"
+                       value="{{set.title}}"/>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="config[{{category}}][{{setIdx}}][width]">Breite</label>
+                        <input class="form-control set-width" type="text"
+                               name="config[{{category}}][{{setIdx}}][width]"
+                               value="{{set.width}}"/>
+                    </div>
+
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label for="config[{{category}}][{{setIdx}}][height]">Höhe</label>
+                        <input class="form-control set-height" type="text"
+                               name="config[{{category}}][{{setIdx}}][height]"
+                               value="{{set.height}}"/>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][suffix]">Anhang für Dateinamen</label>
+                <input class="form-control" type="text"
+                       name="config[{{category}}][{{setIdx}}][suffix]"
+                       value="{{set.suffix}}"/>
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][fontName]">Schriftart für Text-Overlays</label>
+                <select name="config[{{category}}][{{setIdx}}][overlayFontName]" class="form-control">
+                    {% for font in fonts %}
+                    <option value="{{ font.file }}" {% if font.file == set.overlayFontName %}selected{% endif %}>{{ font.name }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][fontName]">Schriftgröße für Text-Overlays</label>
+                <input class="form-control" type="text"
+                       name="config[{{category}}][{{setIdx}}][overlayFontSize]"
+                       value="{{set.overlayFontSize}}"/>
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][fontName]">Textausrichtung für Text-Overlays</label>
+                <div>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default btnOverlayAlignment {% if set.overlayAlignment == 0 %}active{% endif %}" id="overlayAlignmentOption0">
+                            <input type="radio" name="config[{{category}}][{{setIdx}}][overlayAlignment]" {% if set.overlayAlignment == 0 %}checked{% endif %}>
+                            <span class="fa fa-align-left" title="linksbündig" value="0"></span>
+                        </label>
+                        <label class="btn btn-default btnOverlayAlignment {% if set.overlayAlignment == 1 %}active{% endif %}" id="overlayAlignmentOption1">
+                            <input type="radio" name="config[{{category}}][{{setIdx}}][overlayAlignment]" value="1" {% if set.overlayAlignment == 1 %}checked{% endif %}>
+                            <span class="fa fa-align-center" title="zentriert"></span>
+                        </label>
+                        <label class="btn btn-default btnOverlayAlignment {% if set.overlayAlignment == 2 %}active{% endif %}" id="overlayAlignmentOption2">
+                            <input type="radio" name="config[{{category}}][{{setIdx}}][overlayAlignment]" value="2" {% if set.overlayAlignment == 2 %}checked{% endif %}>
+                            <span class="fa fa-align-right" title="rechtsbündig"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][processor]">Weiterverarbeitung</label>
+                <select class="form-control" type="text"
+                        name="config[{{category}}][{{setIdx}}][processor]">
+                    {% for processor, icon in processors %}
+                    <option value="{{processor}}" {{set.processor == processor ? 'selected' : ''}}>
+                    <span class="glyphicon glyphicon-{{icon}}"></span> {{processor}}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label for="config[{{category}}][{{setIdx}}][processorOptions]">Optionen zur Weiterverarbeitung</label>
+                <textarea class="form-control" type="text"
+                          name="config[{{category}}][{{setIdx}}][processorOptions]">{{set.processorOptions}}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
