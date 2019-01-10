@@ -27,4 +27,4 @@ CUTTER can be extended in several areas, where factory methods are used to retur
 CUTTER coding will conform to PSR/2 standards.
 
 ### Namespaces
-All CUTTER classes will be namespaced under the \VMFDS\Cutter namespace.
+All CUTTER classes will be namespaced under the \Peregrinus\Cutter namespace.

@@ -1,6 +1,6 @@
 <?php
 
-namespace VMFDS\Cutter\Controllers;
+namespace Peregrinus\Cutter\Controllers;
 
 /*
  * CUTTER
@@ -44,7 +44,7 @@ class AbstractController
     {
         $confManager = $this->getConfigurationManager();
         $this->conf = $confManager->getConfigurationSet('cutter');
-        $this->request = \VMFDS\Cutter\Core\Request::getInstance();
+        $this->request = \Peregrinus\Cutter\Core\Request::getInstance();
     }
 
     protected function initializeController()
@@ -69,13 +69,13 @@ class AbstractController
         $requestedAction = $this->request->getArgument('action');
         $actionMethod = $requestedAction . 'Action';
         if (!method_exists($this, $actionMethod)) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addEmergency(
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addEmergency(
                 'Method "' . $actionMethod . '" not implemented in controller' . get_class($this) . ' .');
             throw new \Exception('Method "' . $requestedAction . '" not implemented in this controller.',
                 0x01);
         } else {
             // get the view
-            $this->view = new \VMFDS\Cutter\Core\View($requestedAction);
+            $this->view = new \Peregrinus\Cutter\Core\View($requestedAction);
             $this->view->setViewPath(CUTTER_viewPath . $this->getName() . '/');
             $this->view->assign('basePath', CUTTER_baseUrl);
             // run the initialize and action methods
@@ -91,12 +91,12 @@ class AbstractController
 
     /**
      * Get an instance of the configuration manager
-     * @return \VMFDS\Cutter\Core\ConfigurationManager Configuration manager object
+     * @return \Peregrinus\Cutter\Core\ConfigurationManager Configuration manager object
      */
     protected function getConfigurationManager()
     {
         if (is_null($this->configurationManager)) {
-            $this->configurationManager = \VMFDS\Cutter\Core\ConfigurationManager::getInstance();
+            $this->configurationManager = \Peregrinus\Cutter\Core\ConfigurationManager::getInstance();
         }
         return $this->configurationManager;
     }
@@ -109,7 +109,7 @@ class AbstractController
     {
         $class = get_class($this);
         return str_replace('Controller', '',
-            str_replace('VMFDS\\Cutter\\Controllers\\', '', $class));
+            str_replace('Peregrinus\\Cutter\\Controllers\\', '', $class));
     }
 
     /**
@@ -123,7 +123,7 @@ class AbstractController
         $redirectMethod = self::REDIRECT_HEADER,
         $delay = 0
     ) {
-        \VMFDS\Cutter\Core\Router::getInstance()->redirect(
+        \Peregrinus\Cutter\Core\Router::getInstance()->redirect(
             strtolower($this->getName()), $action, null, null, $redirectMethod,
             $delay);
     }

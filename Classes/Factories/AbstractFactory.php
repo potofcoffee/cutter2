@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Factories;
+namespace Peregrinus\Cutter\Factories;
 
 /**
  * Abstract factory class
@@ -37,7 +37,7 @@ class AbstractFactory
         $type          = ucfirst($type);
         $typeAbstract  = 'Abstract'.$type;
         $typeMulti     = $type.'s';
-        $typeNamespace = '\\VMFDS\\Cutter\\'.$typeMulti;
+        $typeNamespace = '\\Peregrinus\\Cutter\\'.$typeMulti;
         $typePath      = CUTTER_basePath.'Classes/'.$typeMulti.'/';
 
         $classes = array();
@@ -64,7 +64,7 @@ class AbstractFactory
     {
         $class = get_called_class();
         return str_replace('Factory', '',
-            str_replace('VMFDS\\Cutter\\Factories\\', '', $class));
+            str_replace('Peregrinus\\Cutter\\Factories\\', '', $class));
     }
 
     /**
@@ -76,7 +76,7 @@ class AbstractFactory
     {
         $factoryType = self::getKey();
         $ns          = (self::$ns ? self::$ns : $factoryType.'s');
-        $className   = '\\VMFDS\\Cutter\\'.$ns.'\\'.ucFirst($key).$factoryType;
+        $className   = '\\Peregrinus\\Cutter\\'.$ns.'\\'.ucFirst($key).$factoryType;
         if (class_exists($className)) {
             return new $className();
         } else {

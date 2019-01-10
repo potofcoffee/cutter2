@@ -3,9 +3,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Connectors;
+namespace Peregrinus\Cutter\Connectors;
 
-use VMFDS\Cutter\Converters\AbstractConverter;
-use VMFDS\Cutter\Core\Debugger;
-use VMFDS\Cutter\Core\Image;
-use VMFDS\Cutter\Factories\ConverterFactory;
-use VMFDS\Cutter\Utility\FileUtility;
-use VMFDS\Cutter\Utility\ImageMetaUtility;
+use Peregrinus\Cutter\Converters\AbstractConverter;
+use Peregrinus\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\Image;
+use Peregrinus\Cutter\Factories\ConverterFactory;
+use Peregrinus\Cutter\Utility\FileUtility;
+use Peregrinus\Cutter\Utility\ImageMetaUtility;
 
 class WordpressConnector extends AbstractConnector
 {

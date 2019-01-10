@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Controllers;
+namespace Peregrinus\Cutter\Controllers;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ namespace VMFDS\Cutter\Controllers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use VMFDS\Cutter\Core\Debugger;
-use VMFDS\Cutter\Core\Request;
-use VMFDS\Cutter\Core\Router;
-use VMFDS\Cutter\Core\Session;
-use VMFDS\Cutter\Utility\FontsUtility;
+use Peregrinus\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\Request;
+use Peregrinus\Cutter\Core\Router;
+use Peregrinus\Cutter\Core\Session;
+use Peregrinus\Cutter\Utility\FontsUtility;
 
 class UiController extends AbstractController
 {
@@ -46,13 +46,13 @@ class UiController extends AbstractController
      */
     function indexAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('indexAction called');
-        $session = \VMFDS\Cutter\Core\Session::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('indexAction called');
+        $session = \Peregrinus\Cutter\Core\Session::getInstance();
 
         // redirect to upload, if we don't have a file yet
         if (!$session->hasArgument('workFile')) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('No workFile in session, redirecting to upload');
-            \VMFDS\Cutter\Core\Router::getInstance()->redirect(
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('No workFile in session, redirecting to upload');
+            \Peregrinus\Cutter\Core\Router::getInstance()->redirect(
                 'acquisition', 'form');
         }
 
@@ -66,7 +66,7 @@ class UiController extends AbstractController
         $this->view->assign('legal', $session->getArgument('legal'));
         $this->view->assign('meta', $session->getArgument('meta'));
 
-        $info = \VMFDS\Cutter\Factories\TemplateFactory::getTemplateInfo();
+        $info = \Peregrinus\Cutter\Factories\TemplateFactory::getTemplateInfo();
         ksort($info);
         $this->view->assign('templates', $info);
 
@@ -79,7 +79,7 @@ class UiController extends AbstractController
 
     function debugAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('debugAction called');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('debugAction called');
         die('<pre>'.print_r($_REQUEST, 1));
     }
 
@@ -89,7 +89,7 @@ class UiController extends AbstractController
     public function downloadAction()
     {
         $this->dontShowView();
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         if ($request->hasArgument('url')) {
             $url = $request->getArgument('url');
             $raw = CUTTER_basePath.'Temp/Processed/'.basename(parse_url($url,

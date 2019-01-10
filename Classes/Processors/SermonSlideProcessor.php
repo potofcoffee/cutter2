@@ -3,9 +3,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Processors;
+namespace Peregrinus\Cutter\Processors;
 
 /**
  * Description of EventProcessor
@@ -39,9 +39,9 @@ class SermonSlideProcessor extends AbstractProcessor
     public function __construct()
     {
         parent::__construct();
-        $confManager = \VMFDS\Cutter\Core\ConfigurationManager::getInstance();
+        $confManager = \Peregrinus\Cutter\Core\ConfigurationManager::getInstance();
         $this->configuration = $confManager->getConfigurationSet('sermonSlide', 'processors');
-        $this->sermonDB = new \VMFDS\Cutter\Connectors\Typo3Connector();
+        $this->sermonDB = new \Peregrinus\Cutter\Connectors\Typo3Connector();
     }
 
     public function getAdditionalFields()
@@ -136,7 +136,7 @@ class SermonSlideProcessor extends AbstractProcessor
      */
     public function process($fileName, $options)
     {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         if ($this->checkRequiredArguments($options)) {
             if ($options['sermon'] != -1) {
                 // create slide?
@@ -204,12 +204,12 @@ class SermonSlideProcessor extends AbstractProcessor
 
     public function ajaxGetSlides()
     {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         return $this->slideSelect($request->getArgument('sermon'), false);
     }
 
     public function getSlidesData() {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         return $this->slideSelect($request->getArgument('sermon'), false);
     }
 }

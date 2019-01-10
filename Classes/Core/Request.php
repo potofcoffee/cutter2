@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ class Request
 
     /**
      * Get an instance of the request object
-     * @return \VMFDS\Cutter\Core\Request Instance of session object
+     * @return \Peregrinus\Cutter\Core\Request Instance of session object
      */
     static public function getInstance()
     {
@@ -121,13 +121,13 @@ class Request
         $uri                = str_replace(parse_url(CUTTER_baseUrl, PHP_URL_PATH),
             '', $uri);
         $uri                = parse_url($uri, PHP_URL_PATH);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Parsing URI '.$uri);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Parsing URI '.$uri);
         if ($uri != '') {
             $this->data['_raw'] = explode('/', $uri);
         } else {
             $this->data['_raw'] = array();
         }
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('URI parsed',
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('URI parsed',
             $this->data);
     }
 
@@ -170,7 +170,7 @@ class Request
     {
         foreach ($args as $arg) {
             if (!$this->hasArgument($arg)) {
-                \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('FATAL: Missing argument \''.$arg.'\'');
+                \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('FATAL: Missing argument \''.$arg.'\'');
                 die('FATAL: Missing argument \''.$arg.'\'');
             }
         }

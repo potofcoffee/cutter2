@@ -1,13 +1,13 @@
 {
-    "name": "vmfds/cutter",
-    "version": "2.0.1",
+    "name": "peregrinus/cutter",
+    "version": "2.9.9",
     "description": "Versatile image cutter and processor",
     "license": "GPL-3.0+",
     "type": "project",
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/VolksmissionFreudenstadt/cutter"
+            "url": "https://github.com/potofcoffee/cutter"
         }
     ],
     "require": {
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "VMFDS\\Cutter\\": "Classes/"
+            "Peregrinus\\Cutter\\": "Classes/"
         }
     }
 }

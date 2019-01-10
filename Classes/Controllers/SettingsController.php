@@ -2,7 +2,7 @@
 /*
  * cutter2
  *
- * Copyright (c) 2018 Christoph Fischer, https://christoph-fischer.org
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Controllers;
+namespace Peregrinus\Cutter\Controllers;
 
 
-use VMFDS\Cutter\Core\ConfigurationManager;
-use VMFDS\Cutter\Core\Debugger;
-use VMFDS\Cutter\Core\Router;
-use VMFDS\Cutter\Factories\AbstractFactory;
-use VMFDS\Cutter\Factories\ProcessorFactory;
-use VMFDS\Cutter\Factories\ProviderFactory;
-use VMFDS\Cutter\Utility\FontsUtility;
+use Peregrinus\Cutter\Core\ConfigurationManager;
+use Peregrinus\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\Router;
+use Peregrinus\Cutter\Factories\AbstractFactory;
+use Peregrinus\Cutter\Factories\ProcessorFactory;
+use Peregrinus\Cutter\Factories\ProviderFactory;
+use Peregrinus\Cutter\Utility\FontsUtility;
 
 class SettingsController extends AbstractController
 {

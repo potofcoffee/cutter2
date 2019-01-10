@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Controllers;
+namespace Peregrinus\Cutter\Controllers;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ namespace VMFDS\Cutter\Controllers;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use VMFDS\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\Debugger;
 
 class AcquisitionController extends AbstractController
 {
@@ -42,13 +42,13 @@ class AcquisitionController extends AbstractController
      */
     function formAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('formAction called');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('formAction called');
 
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Clearing session content');
-        \VMFDS\Cutter\Core\Session::getInstance()->clear();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Clearing session content');
+        \Peregrinus\Cutter\Core\Session::getInstance()->clear();
 
         // get list of possible providers
-        $providers = \VMFDS\Cutter\Factories\ProviderFactory::getProviderNames();
+        $providers = \Peregrinus\Cutter\Factories\ProviderFactory::getProviderNames();
         $this->view->assign('providers', $providers);
 
         // get history
@@ -74,25 +74,25 @@ class AcquisitionController extends AbstractController
      */
     function importAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('acquisition/import action called');
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('acquisition/import action called');
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         if (!$request->hasArgument('url')) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('No url specified, redirecting to upload');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('No url specified, redirecting to upload');
             $this->redirectToAction('form');
         }
         $url      = $request->getArgument('url');
-        $session  = \VMFDS\Cutter\Core\Session::getInstance()->setArgument('original_url',
+        $session  = \Peregrinus\Cutter\Core\Session::getInstance()->setArgument('original_url',
             $url);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addNotice('Starting cloud import from url '.$url);
-        $provider = \VMFDS\Cutter\Factories\ProviderFactory::getHostHandler($url);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Using provider class '.get_class($provider));
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addNotice('Starting cloud import from url '.$url);
+        $provider = \Peregrinus\Cutter\Factories\ProviderFactory::getHostHandler($url);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Using provider class '.get_class($provider));
 
         // do we have to process a captcha?
         if ($provider->hasCaptcha) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Provider requires a captcha');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Provider requires a captcha');
             if (!$request->hasArgument('captchaHash')) {
-                \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('No captcha set yet, redirecting');
-                \VMFDS\Cutter\Core\Router::getInstance()->redirect(
+                \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('No captcha set yet, redirecting');
+                \Peregrinus\Cutter\Core\Router::getInstance()->redirect(
                     strtolower($this->getName()), 'captcha',
                     array('url' => $url));
             } else {
@@ -115,8 +115,8 @@ class AcquisitionController extends AbstractController
             pathinfo($provider->workFile, PATHINFO_FILENAME)
             .'_history.jpg';
         $imageFile = CUTTER_uploadPath.$provider->workFile;
-        $converter = \VMFDS\Cutter\Factories\ConverterFactory::getFileHandler($imageFile);
-        $image = new \VMFDS\Cutter\Core\Image($converter->getImage($imageFile));
+        $converter = \Peregrinus\Cutter\Factories\ConverterFactory::getFileHandler($imageFile);
+        $image = new \Peregrinus\Cutter\Core\Image($converter->getImage($imageFile));
         $h = $image->getHeight()*(300/$image->getWidth());
         $image->resize(0, 0, 300, $h, $image->getWidth(), $image->getHeight());
         $image->toJpeg($destinationFile, 100);
@@ -129,18 +129,18 @@ class AcquisitionController extends AbstractController
 
 
         // save data in session and redirect to index
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Import done, saving to session.');
-        $session = \VMFDS\Cutter\Core\Session::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Import done, saving to session.');
+        $session = \Peregrinus\Cutter\Core\Session::getInstance();
         $session->setArgument('workFile', $provider->workFile);
         $session->setArgument('legal', $provider->legal);
 
-        \VMFDS\Cutter\Core\Logger::getLogger()->addNotice('Cloud import processed with Provider "'.$provider->getName().'".');
-        \VMFDS\Cutter\Core\Logger::getLogger()->addNotice('File received: '.CUTTER_uploadPath.$workFile);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addNotice('Legal text preset: '.$legal);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addNotice('Cloud import processed with Provider "'.$provider->getName().'".');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addNotice('File received: '.CUTTER_uploadPath.$workFile);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addNotice('Legal text preset: '.$legal);
 
-        \VMFDS\Cutter\Core\Router::getInstance()->redirect(
+        \Peregrinus\Cutter\Core\Router::getInstance()->redirect(
             'ui', 'index', null, null,
-            \VMFDS\Cutter\Core\Router::REDIRECT_JAVASCRIPT, 3000);
+            \Peregrinus\Cutter\Core\Router::REDIRECT_JAVASCRIPT, 3000);
     }
 
     /**
@@ -150,15 +150,15 @@ class AcquisitionController extends AbstractController
      */
     function captchaAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('acquisition/import action called');
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('acquisition/import action called');
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         if (!$request->hasArgument('url')) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('No url specified, redirecting to upload');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('No url specified, redirecting to upload');
             $this->redirectToAction('form');
         }
         $url      = $request->getArgument('url');
-        $provider = \VMFDS\Cutter\Factories\ProviderFactory::getHostHandler($url);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Using provider class '.get_class($provider));
+        $provider = \Peregrinus\Cutter\Factories\ProviderFactory::getHostHandler($url);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Using provider class '.get_class($provider));
 
         $hash  = $provider->getCaptchaHash();
         $image = $provider->getCaptchaImage($hash);
@@ -175,14 +175,14 @@ class AcquisitionController extends AbstractController
      */
     function receiveAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('receiveAction called.');
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('receiveAction called.');
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         if (!$request->hasFilesArray()) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('No files array.');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('No files array.');
             $this->redirectToAction('upload');
         }
         $filesArray = $request->getFilesArray();
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Files: '.print_r($filesArray, 1));
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Files: '.print_r($filesArray, 1));
         $fileName   = $filesArray['file']['name'];
         $legal      = '';
         if ($request->hasArgument('legal')) {
@@ -196,7 +196,7 @@ class AcquisitionController extends AbstractController
         move_uploaded_file($filesArray['file']['tmp_name'], $dest);
 
         // save info in session
-        $session = \VMFDS\Cutter\Core\Session::getInstance();
+        $session = \Peregrinus\Cutter\Core\Session::getInstance();
         $session->setArgument('workFile', $fileName);
         $session->setArgument('legal', $legal);
 
@@ -205,7 +205,7 @@ class AcquisitionController extends AbstractController
     }
 
     function uploadedAction() {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('uploadedAction called.');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('uploadedAction called.');
         Debugger::dumpAndDie([$_REQUEST, $_FILES, $_SESSION]);
     }
 }

@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace VMFDS\Cutter\Processors;
+namespace Peregrinus\Cutter\Processors;
 
 /**
  * Description of DownloadProcessor
@@ -50,7 +50,7 @@ class SaveProcessor extends AbstractProcessor
         }
         
         if ($this->localConfig['move_to']) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Saving file as ' . $this->localConfig['move_to'] . $destFile);
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Saving file as ' . $this->localConfig['move_to'] . $destFile);
             copy($fileName, $this->localConfig['move_to'] . $destFile);
             return array(
                 'result' => self::RESULT_OK

@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 /**
  * Description of AbstractTemplate
@@ -42,7 +42,7 @@ class Template
 
     public function getTemplateInfo()
     {
-        $icon = \VMFDS\Cutter\Factories\ProcessorFactory::get($this->processor)->getIcon();
+        $icon = \Peregrinus\Cutter\Factories\ProcessorFactory::get($this->processor)->getIcon();
         /*
         return array(
             'title' => $this->title,
@@ -77,7 +77,7 @@ class Template
     {
         $class = get_class($this);
         return str_replace('Template', '',
-            str_replace('VMFDS\\Cutter\\Templates\\', '', $class));
+            str_replace('Peregrinus\\Cutter\\Templates\\', '', $class));
     }
 
     public function __construct($category, $set)
@@ -93,7 +93,7 @@ class Template
 
     public function getProcessorObject()
     {
-        return \VMFDS\Cutter\Factories\ProcessorFactory::get($this->processor);
+        return \Peregrinus\Cutter\Factories\ProcessorFactory::get($this->processor);
     }
 
     public function getCategory()

@@ -20,10 +20,10 @@
  */
 
 
-namespace VMFDS\Cutter\Factories;
+namespace Peregrinus\Cutter\Factories;
 
 
-use VMFDS\Cutter\Core\ConfigurationManager;
+use Peregrinus\Cutter\Core\ConfigurationManager;
 
 class LicenseFactory
 {

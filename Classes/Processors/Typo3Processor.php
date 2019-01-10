@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Processors;
+namespace Peregrinus\Cutter\Processors;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,9 +34,9 @@ class Typo3Processor extends AbstractProcessor
     public function __construct()
     {
         parent::__construct();
-        $confManager = \VMFDS\Cutter\Core\ConfigurationManager::getInstance();
+        $confManager = \Peregrinus\Cutter\Core\ConfigurationManager::getInstance();
         $this->configuration = $confManager->getConfigurationSet('typo3', 'processors');
-        $this->db = new \VMFDS\Cutter\Connectors\Typo3Connector();
+        $this->db = new \Peregrinus\Cutter\Connectors\Typo3Connector();
     }
 
     public function getAdditionalFields()
@@ -95,7 +95,7 @@ class Typo3Processor extends AbstractProcessor
     public function process($fileName, $options)
     {
         if ($this->checkRequiredArguments($options)) {
-            $request = \VMFDS\Cutter\Core\Request::getInstance();
+            $request = \Peregrinus\Cutter\Core\Request::getInstance();
             $destFile = pathinfo($fileName, PATHINFO_BASENAME);
             copy($fileName, $this->configuration['move_to'] . $destFile);
             $sql = 'UPDATE pages'

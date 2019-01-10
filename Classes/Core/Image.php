@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 /**
  * Description of Image
@@ -55,11 +55,11 @@ class Image
      * @param string $legalText Legal text
      * @param int $w Picture width
      * @param int $h Picture height
-     * @param \VMFDS\Cutter\Core\Color $color Color object
+     * @param \Peregrinus\Cutter\Core\Color $color Color object
      */
     public function setLegalText($legalText, $w, $h, $color)
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('setLegalText()');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('setLegalText()');
 
         $minHeight = 15;
         $font      = CUTTER_basePath.'Assets/Fonts/OpenSans.ttf';
@@ -73,22 +73,22 @@ class Image
             // calculate bounding box
             $box    = imagettfbbox($size, 0, $font, $legalText);
             $height = abs($box[7] - $box[1]);
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(print_r(array('size' => $size,
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(print_r(array('size' => $size,
                 'height' => $height, 'bbox' => $box,
                     ), 1));
         }
         $size--;
         $box = imagettfbbox($size, 0, $font, $legalText);
         $x   = abs($box[5] - $box[1]);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Legal font size is '.$size);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Legal font file is '.$font);
 
         // get color
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Text color: '.print_r($color, 1));
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Palette usage for this image: '.imagecolorstotal($this->image));
         $imgColor = imagecolorexact($this->image, $color->R, $color->G,
             $color->B);
@@ -96,14 +96,14 @@ class Image
             $imgColor = imagecolorallocate($this->image, $color->R, $color->G,
                 $color->B);
         }
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Palette index for this color: '.$imgColor);
 
 
 // insert source:
         imagettftext($this->image, $size, 90, $x, $h - 5, $imgColor, $font,
             $legalText);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Done inserting legal text.');
     }
 

@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 /**
  * Description of Router
@@ -38,7 +38,7 @@ class Router
 
     /**
      * Get an instance of the request object
-     * @return \VMFDS\Cutter\Core\Router Instance of session object
+     * @return \Peregrinus\Cutter\Core\Router Instance of session object
      */
     static public function getInstance(): Router
     {
@@ -67,7 +67,7 @@ class Router
         if ($this->defaultController != '') {
             return $this->defaultController;
         } else {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addEmergency(
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addEmergency(
                 'No default controller specified. Use Router->setDefaultController();');
             throw new Exception('No default controller specified.');
         }
@@ -88,7 +88,7 @@ class Router
      */
     public function dispatch()
     {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         $request->parseUri();
         $request->applyUriPattern(array('controller', 'action'));
 
@@ -110,10 +110,10 @@ class Router
      */
     protected function getControllerClass($controllerName)
     {
-        return '\\VMFDS\\Cutter\\Controllers\\'.ucfirst($controllerName).'Controller';
+        return '\\Peregrinus\\Cutter\\Controllers\\'.ucfirst($controllerName).'Controller';
         if (!class_exists($controllerClass)) {
             if ($controllerName == $this->getDefaultController()) {
-                \VMFDS\Cutter\Core\Logger::getLogger()->addEmergency(
+                \Peregrinus\Cutter\Core\Logger::getLogger()->addEmergency(
                     'Default controller class '.$controllerClass.' does not exist!'
                 );
                 throw new Exception('Default controller class '.$controllerClass.' does not exist!');
@@ -162,7 +162,7 @@ class Router
         }
         $arguments['controller'] = $controller;
         $arguments['action']     = $action;
-        $uri                     = \VMFDS\Cutter\Core\Router::getInstance()->getUri($arguments,
+        $uri                     = \Peregrinus\Cutter\Core\Router::getInstance()->getUri($arguments,
             $pattern);
 
 

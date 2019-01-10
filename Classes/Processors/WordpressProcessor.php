@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Processors;
+namespace Peregrinus\Cutter\Processors;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,8 +24,8 @@ namespace VMFDS\Cutter\Processors;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use VMFDS\Cutter\Connectors\WordpressConnector;
-use VMFDS\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Connectors\WordpressConnector;
+use Peregrinus\Cutter\Core\Debugger;
 
 class WordpressProcessor extends AbstractProcessor
 {
@@ -37,7 +37,7 @@ class WordpressProcessor extends AbstractProcessor
     public function __construct()
     {
         parent::__construct();
-        $confManager = \VMFDS\Cutter\Core\ConfigurationManager::getInstance();
+        $confManager = \Peregrinus\Cutter\Core\ConfigurationManager::getInstance();
         $this->configuration = $confManager->getConfigurationSet('wordpress', 'processors');
     }
 
@@ -53,7 +53,7 @@ class WordpressProcessor extends AbstractProcessor
         $this->localConfig = yaml_parse($this->localConfig);
         $this->wp = new WordpressConnector(array_merge($this->localConfig, $this->configuration));
         if ($this->checkRequiredArguments($options)) {
-            $request = \VMFDS\Cutter\Core\Request::getInstance();
+            $request = \Peregrinus\Cutter\Core\Request::getInstance();
             $destFile = pathinfo($fileName, PATHINFO_BASENAME);
 
 

@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 class Color
 {
@@ -38,7 +38,7 @@ class Color
         $this->R = hexdec(substr($hex, 0, 2));
         $this->G = hexdec(substr($hex, 2, 2));
         $this->B = hexdec(substr($hex, 4, 2));
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Parsed color: '.print_r($this,
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Parsed color: '.print_r($this,
                 1));
     }
 }

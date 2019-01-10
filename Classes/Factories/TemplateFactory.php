@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Factories;
-use VMFDS\Cutter\Core\ConfigurationManager;
-use VMFDS\Cutter\Core\Template;
+namespace Peregrinus\Cutter\Factories;
+use Peregrinus\Cutter\Core\ConfigurationManager;
+use Peregrinus\Cutter\Core\Template;
 
 /**
  * Description of TemplateFactory

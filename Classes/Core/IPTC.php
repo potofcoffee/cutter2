@@ -9,7 +9,7 @@
 
   \*********************************************************** */
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 DEFINE('IPTC_OBJECT_NAME', '005');
 DEFINE('IPTC_EDIT_STATUS', '007');

@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Processors;
+namespace Peregrinus\Cutter\Processors;
 
 /**
  * Description of AbstractProcessor
@@ -53,7 +53,7 @@ class AbstractProcessor
     {
         $class = get_class($this);
         return str_replace('Processor', '',
-            str_replace('VMFDS\\Cutter\\Processors\\', '', $class));
+            str_replace('Peregrinus\\Cutter\\Processors\\', '', $class));
     }
 
     function __construct()
@@ -112,7 +112,7 @@ class AbstractProcessor
         $args = $this->requiresArguments();
         foreach ($args as $arg) {
             if (!isset($data[$arg])) {
-                \VMFDS\Cutter\Core\Logger::getLogger()->addError(
+                \Peregrinus\Cutter\Core\Logger::getLogger()->addError(
                     'Required argument "'.$arg.'" not passed to '.get_called_class());
                 throw new \Exception('Required argument "'.$arg.'" not passed to '.get_called_class());
             }

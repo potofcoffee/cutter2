@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,10 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Controllers;
+namespace Peregrinus\Cutter\Controllers;
 
-use VMFDS\Cutter\Core\Debugger;
-use VMFDS\Cutter\Core\ImageOverlay;
+use Peregrinus\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\ImageOverlay;
 
 /**
  * Description of CutController
@@ -56,21 +56,21 @@ class CutController extends AbstractController
      */
     function doAction()
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('do Action');
-        $session = \VMFDS\Cutter\Core\Session::getInstance();
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('do Action');
+        $session = \Peregrinus\Cutter\Core\Session::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
 
         // we just die, since this is a headless controller
         if (!$session->hasArgument('workFile')) die('workfile');
 	    $request->requireArguments(array('x', 'y', 'w', 'h', 'category', 'set', 'color'));
-	    \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('All necessary arguments are present.');
+	    \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('All necessary arguments are present.');
 
 	    // update meta from request
 	    $session->setArgument('meta', array_replace_recursive($session->getArgument('meta'), $request->getArgument('meta')));
 
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Loading template '.$request->getArgument('category').'/'.$request->getArgument('set'));
-        $template  = \VMFDS\Cutter\Factories\TemplateFactory::get($request->getArgument('category'), $request->getArgument('set'));
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Loading processor '.$template->getProcessor());
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Loading template '.$request->getArgument('category').'/'.$request->getArgument('set'));
+        $template  = \Peregrinus\Cutter\Factories\TemplateFactory::get($request->getArgument('category'), $request->getArgument('set'));
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Loading processor '.$template->getProcessor());
         $processor = $template->getProcessorObject();
         $processor->setOptionsArray($template->getProcessorOptions());
 
@@ -82,35 +82,35 @@ class CutController extends AbstractController
 
         // import image from a converter
         $imageFile = CUTTER_uploadPath.$session->getArgument('workFile');
-        $converter = \VMFDS\Cutter\Factories\ConverterFactory::getFileHandler($imageFile);
+        $converter = \Peregrinus\Cutter\Factories\ConverterFactory::getFileHandler($imageFile);
 
         $colorString = $request->getArgument('color');
-        $color       = new \VMFDS\Cutter\Core\Color($colorString);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Color hex string: '.$request->getArgument('color'));
+        $color       = new \Peregrinus\Cutter\Core\Color($colorString);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Color hex string: '.$request->getArgument('color'));
 
         // process image
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Start image processing.');
-        $image = new \VMFDS\Cutter\Core\Image($converter->getImage($imageFile));
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Start image processing.');
+        $image = new \Peregrinus\Cutter\Core\Image($converter->getImage($imageFile));
         $image->resize($request->getArgument('x'), $request->getArgument('y'),
             $template->getWidth(), $template->getHeight(),
             $request->getArgument('w'), $request->getArgument('h'));
         if ($request->hasArgument('legal')) {
             $legal = $request->getArgument('legal').($meta['license']['short'] ? ' // Lizenz: '.$meta['license']['short'] : '');
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Legal text is "'.$legal.'"');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Legal text is "'.$legal.'"');
             $image->setLegalText('Bild: '.$legal, $template->getWidth(),
                 $template->getHeight(), $color);
         } else $legal='';
 
 
 
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Creating JPEG image...');
         $image->toJpeg($destinationFile, 100);
 
 
         // add overlay text, if any
         if ($request->hasArgument('overlayText') && ($request->getArgument('overlayText') != '')) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Adding overlay text...');
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Adding overlay text...');
             $overlayImg = new ImageOverlay($template->getWidth(), $template->getHeight());
             $overlayImg->compositeImageFile($destinationFile, \Imagick::COMPOSITE_DEFAULT, 0, 0);
 
@@ -136,8 +136,8 @@ class CutController extends AbstractController
 
 
         // Embed IPTC data
-        $session = \VMFDS\Cutter\Core\Session::getInstance();
-        $i       = new \VMFDS\Cutter\Core\IPTC($destinationFile);
+        $session = \Peregrinus\Cutter\Core\Session::getInstance();
+        $i       = new \Peregrinus\Cutter\Core\IPTC($destinationFile);
         $i->set(IPTC_BYLINE, $meta['author']);
         $i->set(IPTC_COPYRIGHT_STRING, $legal.', '.$meta['url']);
         $i->set(IPTC_ORIGINATING_PROGRAM, CUTTER_software);
@@ -168,13 +168,13 @@ class CutController extends AbstractController
             .'Text color: #'.$request->getArgument('color')."\r\n"
             .'CUTTER '.CUTTER_version);
         fclose($fp);
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Adding EXIF comment');
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('External command: '.'jhead -ci '.$commentFile.' '.$destinationFile);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Adding EXIF comment');
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('External command: '.'jhead -ci '.$commentFile.' '.$destinationFile);
         exec('jhead -ci '.$commentFile.' '.$destinationFile);
         unlink($commentFile);
 
         // Processor: What do we do with the finished file?
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
             'Calling final file processor...');
         $this->data = $this->callProcessor($processor, $destinationFile);
     }
@@ -182,24 +182,24 @@ class CutController extends AbstractController
     /**
      * Call a processor on an image file
      * Recursively fall back to a possible fallback processor
-     * @param \VMFDS\Cutter\Processors\AbstractProcessor $processor Processor object
+     * @param \Peregrinus\Cutter\Processors\AbstractProcessor $processor Processor object
      * @param \string $file Path to file
      * @return array Results array
      */
     private function callProcessor($processor, $file)
     {
-        $request    = \VMFDS\Cutter\Core\Request::getInstance();
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Calling file processor '.print_r($processor,
+        $request    = \Peregrinus\Cutter\Core\Request::getInstance();
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Calling file processor '.print_r($processor,
                 1));
         $results    = $processor->process($file,
             $request->getArgumentsArray($processor->requiresArguments()));
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('Processor results '.print_r($results,
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('Processor results '.print_r($results,
                 1));
         $this->data = $results;
 
         // Fallback to another processor?
         if ($results['result'] == $processor::RESULT_FALLBACK) {
-            $fallbackProcessor = \VMFDS\Cutter\Factories\ProcessorFactory::get('Download');
+            $fallbackProcessor = \Peregrinus\Cutter\Factories\ProcessorFactory::get('Download');
             $results           = $this->callProcessor($fallbackProcessor, $file);
         }
         return $results;

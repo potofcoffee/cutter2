@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Controllers;
-use VMFDS\Cutter\Core\Template;
+namespace Peregrinus\Cutter\Controllers;
+use Peregrinus\Cutter\Core\Template;
 
 /**
  * Description of AjaxController
@@ -50,7 +50,7 @@ class AjaxController extends AbstractController
 
     public function loadAction()
     {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         $request->applyUriPattern(['category', 'set']);
         if ($request->hasArgument('category') && $request->hasArgument('set')) {
             $template   = new Template($request->getArgument('category'), $request->getArgument('set'));
@@ -60,11 +60,11 @@ class AjaxController extends AbstractController
 
     public function optionsAction()
     {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         $request->applyUriPattern(['key', 'category', 'set']);
         $request->applyUriPattern(['category', 'set']);
         if ($request->hasArgument('category') && $request->hasArgument('set')) {
-            $template   = \VMFDS\Cutter\Factories\TemplateFactory::get($request->getArgument('category'), $request->getArgument('set'));
+            $template   = \Peregrinus\Cutter\Factories\TemplateFactory::get($request->getArgument('category'), $request->getArgument('set'));
             $processor  = $template->getProcessorObject();
             $processor->setOptionsArray($template->getProcessorOptions());
             $this->data = $processor->getAdditionalFields();
@@ -72,11 +72,11 @@ class AjaxController extends AbstractController
     }
 
     public function getDataAction() {
-        $request = \VMFDS\Cutter\Core\Request::getInstance();
+        $request = \Peregrinus\Cutter\Core\Request::getInstance();
         $request->applyUriPattern(['key', 'field']);
         if ($request->hasArgument('key')) {
             $key        = $request->getArgument('key');
-            $template   = \VMFDS\Cutter\Factories\TemplateFactory::get($key);
+            $template   = \Peregrinus\Cutter\Factories\TemplateFactory::get($key);
             $processor  = $template->getProcessorObject();
             $processor->setOptionsArray($template->getProcessorOptions());
 

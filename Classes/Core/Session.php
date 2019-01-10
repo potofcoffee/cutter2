@@ -1,13 +1,13 @@
 <?php
 
-namespace VMFDS\Cutter\Core;
+namespace Peregrinus\Cutter\Core;
 
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ namespace VMFDS\Cutter\Core;
 // just a wrapper around PHP's session handling
 class Session
 {
-    const SESSION_KEY = 'VMFDS\\Cutter';
+    const SESSION_KEY = 'Peregrinus\\Cutter';
 
     static private $instance = NULL;
     static private $started  = false;
@@ -45,7 +45,7 @@ class Session
 
     /**
      * Get an instance of the session object
-     * @return \VMFDS\Cutter\Core\Session Instance of session object
+     * @return \Peregrinus\Cutter\Core\Session Instance of session object
      */
     static public function getInstance()
     {

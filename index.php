@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -46,25 +46,25 @@ if (CUTTER_debug) {
 }
 
 //ensure all necessary folders are present
-\VMFDS\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Logs/');
-\VMFDS\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/');
-\VMFDS\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/Processed');
-\VMFDS\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/Uploads');
-\VMFDS\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/History');
+\Peregrinus\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Logs/');
+\Peregrinus\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/');
+\Peregrinus\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/Processed');
+\Peregrinus\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/Uploads');
+\Peregrinus\Cutter\Core\FileSystemUtility::ensureFolderIsPresent('Temp/History');
 
 // logging
-\VMFDS\Cutter\Core\Logger::initialize();
+\Peregrinus\Cutter\Core\Logger::initialize();
 
 // do garbage collection
-\VMFDS\Cutter\Core\GarbageCollector::clean(CUTTER_basePath.'Temp/Processed/',
+\Peregrinus\Cutter\Core\GarbageCollector::clean(CUTTER_basePath.'Temp/Processed/',
     '2 days');
-\VMFDS\Cutter\Core\GarbageCollector::clean(CUTTER_basePath.'Temp/Uploads/',
+\Peregrinus\Cutter\Core\GarbageCollector::clean(CUTTER_basePath.'Temp/Uploads/',
     '2 days');
 
 // start session handling
-\VMFDS\Cutter\Core\Session::initialize();
+\Peregrinus\Cutter\Core\Session::initialize();
 
 // get a router and process request
-$router = \VMFDS\Cutter\Core\Router::getInstance();
+$router = \Peregrinus\Cutter\Core\Router::getInstance();
 $router->setDefaultController('acquisition');
 $router->dispatch();

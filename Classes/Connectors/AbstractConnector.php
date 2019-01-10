@@ -2,9 +2,9 @@
 /*
  * CUTTER
  * Versatile Image Cutter and Processor
- * http://github.com/VolksmissionFreudenstadt/cutter
+ * http://github.com/potofcoffee/cutter
  *
- * Copyright (c) 2015 Volksmission Freudenstadt, http://www.volksmission-freudenstadt.de
+ * Copyright (c) Christoph Fischer, https://christoph-fischer.org
  * Author: Christoph Fischer, chris@toph.de
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace VMFDS\Cutter\Connectors;
+namespace Peregrinus\Cutter\Connectors;
 
-use VMFDS\Cutter\Core\Debugger;
+use Peregrinus\Cutter\Core\Debugger;
 
 /**
  * Description of AbstractConnector
@@ -37,7 +37,7 @@ class AbstractConnector
 
     public function __construct($overrideConfiguration = [])
     {
-        $confMan = \VMFDS\Cutter\Core\ConfigurationManager::getInstance();
+        $confMan = \Peregrinus\Cutter\Core\ConfigurationManager::getInstance();
         $this->configuration = array_merge($overrideConfiguration, $confMan->getConfigurationSet(
             $this->getKey(), 'Connectors'));
         $this->db = new \mysqli(
@@ -57,7 +57,7 @@ class AbstractConnector
     {
         $class = get_class($this);
         return str_replace('Connector', '',
-            str_replace('VMFDS\\Cutter\\Connectors\\', '', $class));
+            str_replace('Peregrinus\\Cutter\\Connectors\\', '', $class));
     }
 
     public function escape($s)
@@ -67,10 +67,10 @@ class AbstractConnector
 
     public function query($sql)
     {
-        \VMFDS\Cutter\Core\Logger::getLogger()->addDebug('SQL: ' . $sql);
+        \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug('SQL: ' . $sql);
         $res = $this->db->query($sql);
         if (false === $res) {
-            \VMFDS\Cutter\Core\Logger::getLogger()->addDebug(
+            \Peregrinus\Cutter\Core\Logger::getLogger()->addDebug(
                 'MySQLi Error: ' . $this->db->error);
         }
         return $res;
